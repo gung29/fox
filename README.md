@@ -33,11 +33,16 @@ Selamat datang. Repositori ini berisi **operational framework** dari Fox — seo
 ### Cara menggunakan framework ini:
 ```bash
 # Create new target operation
+# ⚡ Fox will ask: "Mau simpan hasil di mana?"
 fox new target.com 10.10.10.1
 
 # Track progress
 fox list
 fox status target.com
+
+# ⭐ Simpan hasil temuan (interactive)
+# Fox nanya: tipe? lokasi file? konten?
+fox stash target.com
 
 # Add findings
 fox note target.com "Found SQLi at /products.php?id=1"

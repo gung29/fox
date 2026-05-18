@@ -6,6 +6,7 @@ IP            : 10.10.10.1
 Date Added    : 2026-05-18
 Status        : NEW
 Operator      : Fox
+Storage Path  : /root/fox/operations/example.com
 ```
 
 ---
@@ -158,7 +159,38 @@ Access      : Full Root
 
 ---
 
-## 8. LOOT
+## 8. STORAGE STRUCTURE
+
+Semua hasil operasi disimpan di folder berikut:
+
+```
+<Storage Path>/
+├── TARGET.md             ← file ini
+├── recon/                ← subdomain, port, tech, endpoint
+│   ├── domains.txt
+│   ├── ports.txt
+│   ├── tech.txt
+│   └── endpoints.txt
+├── vulns/                ← vulnerability detail + PoC
+│   ├── SQLi.txt
+│   ├── XSS.txt
+│   └── LFI.txt
+├── creds/                ← credentials, hash, token
+│   ├── users.txt
+│   ├── hashes.txt
+│   └── tokens.txt
+├── payloads/             ← shell, exploit code, backdoor
+│   ├── shell.php
+│   └── revshell.py
+├── loot/                 ← database dump, data exfil
+│   ├── database.sql
+│   └── user_data.csv
+├── exploits/             ← exploit scripts & tool output
+│   └── exploit.py
+└── notes.log             ← catatan real-time progress
+```
+
+## 10. LOOT
 
 ```
 - Database dump:            /root/fox/operations/target/loot/database.sql
@@ -170,7 +202,7 @@ Access      : Full Root
 
 ---
 
-## 9. TIMELINE
+## 11. TIMELINE
 
 | Date | Event |
 |------|-------|
@@ -184,7 +216,7 @@ Access      : Full Root
 
 ---
 
-## 10. NOTES
+## 12. NOTES
 
 ```
 - jangan lupa cleanup log di /var/log/auth.log

@@ -46,14 +46,15 @@ show_help() {
     echo ""
     echo -e "${CYAN}COMMANDS:${NC}"
     echo ""
-    echo -e "  ${GREEN}new${NC} <target> <ip>       Buat operasi baru untuk target"
+    echo -e "  ${GREEN}new${NC} <target> <ip>       Buat operasi baru (nanya lokasi storage)"
     echo -e "  ${GREEN}list${NC}                   List semua operasi aktif"
     echo -e "  ${GREEN}open${NC} <target>           Buka file target info"
     echo -e "  ${GREEN}rm${NC} <target>             Hapus operasi (archive dulu)"
     echo -e "  ${GREEN}status${NC} <target>         Lihat status target"
-  echo -e "  ${GREEN}note${NC} <target> <text>    Tambah catatan cepat ke target"
-  echo -e "  ${GREEN}notes${NC} <target>          Lihat semua catatan target"
-  echo -e "  ${GREEN}recon-add${NC} <target>      Tambah hasil recon (interactive)"
+    echo -e "  ${GREEN}note${NC} <target> <text>    Tambah catatan cepat ke target"
+    echo -e "  ${GREEN}notes${NC} <target>          Lihat semua catatan target"
+    echo -e "  ${GREEN}stash${NC} <target>          ⭐ Simpan hasil temuan (interactive)"
+    echo -e "  ${GREEN}recon-add${NC} <target>      Tambah hasil recon (interactive)"
     echo ""
     echo -e "  ${GREEN}flow${NC}                    Tampilkan kill chain flow"
     echo -e "  ${GREEN}skills${NC}                  Tampilkan skill matrix"
@@ -65,12 +66,13 @@ show_help() {
     echo "  ./fox.sh new example.com 10.10.10.1"
     echo "  ./fox.sh list"
     echo "  ./fox.sh open example.com"
+    echo "  ./fox.sh stash target.com"
     echo "  ./fox.sh note example.com 'Found SQLi at /products.php?id=1'"
     echo ""
 }
 
 # ============================================================
-# COMMAND: new — Create new target operation
+# COMMAND: new — Create new target operation (WITH STORAGE PROMPT)
 # ============================================================
 cmd_new() {
     local target="$1"
@@ -81,25 +83,93 @@ cmd_new() {
         return 1
     fi
 
-    local dir="$OPS_DIR/$target"
-    if [[ -d "$dir" ]]; then
+    # Cek apakah udah ada
+    local default_dir="$OPS_DIR/$target"
+    if [[ -d "$default_dir" ]]; then
         echo -e "${YELLOW}[!] Target '$target' already exists!${NC}"
         echo -e "${YELLOW}    Use 'fox open $target' to view it.${NC}"
         return 1
     fi
 
-    mkdir -p "$dir"/{recon,vulns,creds,payloads,loot,exploits}
+    echo ""
+    echo -e "${CYAN}╔══════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║     🦊 FOX — TARGET STORAGE LOCATION       ║${NC}"
+    echo -e "${CYAN}╚══════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "${YELLOW}Target:${NC} $target ($ip)"
+    echo ""
+    echo -e "${BLUE}Mau simpan hasil operasi di mana?${NC}"
+    echo -e "${YELLOW}  Lokasi storage (folder):${NC}"
+    echo -e "    ${GREEN}Enter${NC} = default → ${WHITE}$default_dir${NC}"
+    echo -e "    Atau ketik path kustom, misal:"
+    echo -e "      ${WHITE}/root/project/${target}${NC}"
+    echo -e "      ${WHITE}/mnt/hack/${target}${NC}"
+    echo -e "      ${WHITE}./${target}${NC}"
+    echo ""
+    echo -e "${PURPLE}  ➤  Nama folder:${NC} ${WHITE}${target}${NC}"
+    read -p "  Lokasi (enter = default): " custom_path
 
-    # Copy template dan replace placeholder
+    local dir
+    if [[ -z "$custom_path" ]]; then
+        dir="$default_dir"
+    else
+        # If relative path, resolve relative to OPS_DIR
+        if [[ "$custom_path" != /* ]]; then
+            dir="$OPS_DIR/$custom_path"
+        else
+            dir="$custom_path"
+        fi
+    fi
+
+    # Cek kalo folder udah ada
+    if [[ -d "$dir" ]]; then
+        echo -e "${YELLOW}[!] Folder '$dir' already exists!${NC}"
+        echo -e "${YELLOW}    Menggunakan folder yang ada.${NC}"
+    else
+        mkdir -p "$dir"/{recon,vulns,creds,payloads,loot,exploits}
+    fi
+
+    # Copy template
     cp "$OPS_DIR/template/TARGET.md" "$dir/TARGET.md"
     sed -i "s/\[NAMA TARGET\]/$target/g" "$dir/TARGET.md"
     sed -i "s/example.com/$target/g" "$dir/TARGET.md"
     sed -i "s/10.10.10.1/$ip/g" "$dir/TARGET.md"
+    sed -i "s|Storage Path   :.*|Storage Path   : $dir|" "$dir/TARGET.md"
     sed -i "s/Date Added    :.*/Date Added    : $(date +%Y-%m-%d)/" "$dir/TARGET.md"
 
-    echo -e "${GREEN}[+] New target created: $target ($ip)${NC}"
-    echo -e "${GREEN}    Directory: $dir${NC}"
-    echo -e "${GREEN}    Use 'fox open $target' to start working.${NC}"
+    # Simpan lokasi sebenarnya di file metadata
+    echo "$dir" > "$default_dir/.location" 2>/dev/null || true
+
+    # Kalo pake custom path, bikin symlink dari default ke custom biar gampang ditemuin
+    if [[ "$dir" != "$default_dir" ]]; then
+        mkdir -p "$(dirname "$default_dir")"
+        ln -sf "$dir" "$default_dir" 2>/dev/null || true
+        echo ""
+        echo -e "${YELLOW}  ⚡ Symlink dibuat:${NC}"
+        echo -e "     ${WHITE}$default_dir${NC} → ${WHITE}$dir${NC}"
+    fi
+
+    echo ""
+    echo -e "${GREEN}┌─────────────────────────────────────────────┐${NC}"
+    echo -e "${GREEN}│  ✅ TARGET CREATED                         │${NC}"
+    echo -e "${GREEN}└─────────────────────────────────────────────┘${NC}"
+    echo -e "  ${YELLOW}Target:${NC}  $target"
+    echo -e "  ${YELLOW}IP:${NC}      $ip"
+    echo -e "  ${YELLOW}Storage:${NC} $dir"
+    echo ""
+    echo -e "  ${BLUE}Subfolders:${NC}"
+    echo -e "    ${GREEN}recon/${NC}     → hasil scanning & enumeration"
+    echo -e "    ${GREEN}vulns/${NC}     → vulnerability details & PoC"
+    echo -e "    ${GREEN}creds/${NC}     → credentials, hash, token"
+    echo -e "    ${GREEN}payloads/${NC}  → shellcode, exploit, backdoor"
+    echo -e "    ${GREEN}loot/${NC}      → database dump, data exfil"
+    echo -e "    ${GREEN}exploits/${NC}  → exploit scripts & tools"
+    echo ""
+    echo -e "  ${BLUE}Next steps:${NC}"
+    echo -e "    ${WHITE}fox open $target${NC}     → lihat & edit TARGET.md"
+    echo -e "    ${WHITE}fox stash $target${NC}    → simpan hasil temuan"
+    echo -e "    ${WHITE}fox note $target ...${NC}  → catat progress"
+    echo ""
 }
 
 # ============================================================
@@ -307,6 +377,152 @@ cmd_recon_add() {
 }
 
 # ============================================================
+# COMMAND: stash — Interactive save findings
+# ============================================================
+cmd_stash() {
+    local target="$1"
+    if [[ -z "$target" ]]; then
+        echo -e "${RED}Usage: fox stash <target>${NC}"
+        return 1
+    fi
+
+    # Cari direktori — cek symlink dulu
+    local dir="$OPS_DIR/$target"
+    if [[ ! -d "$dir" ]]; then
+        echo -e "${RED}[!] Target '$target' not found!${NC}"
+        echo -e "${YELLOW}    Use 'fox list' to see available targets.${NC}"
+        return 1
+    fi
+
+    # Follow symlink kalo ada
+    dir=$(readlink -f "$dir" 2>/dev/null || echo "$dir")
+
+    echo ""
+    echo -e "${CYAN}╔══════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║     🦊 FOX — STASH FINDINGS                ║${NC}"
+    echo -e "${CYAN}╚══════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "${YELLOW}Target:${NC} $target"
+    echo -e "${YELLOW}Storage:${NC} $dir"
+    echo ""
+
+    while true; do
+        echo -e "${BLUE}Pilih tipe temuan:${NC}"
+        echo -e "  ${GREEN}1${NC}) recon    — subdomain, port, tech, endpoint"
+        echo -e "  ${GREEN}2${NC}) vuln     — vulnerability detail + PoC"
+        echo -e "  ${GREEN}3${NC}) creds    — password, hash, token, key"
+        echo -e "  ${GREEN}4${NC}) payload  — shell, exploit code, backdoor"
+        echo -e "  ${GREEN}5${NC}) loot     — database dump, data, file"
+        echo -e "  ${GREEN}6${NC}) exploit  — exploit script, tool output"
+        echo -e "  ${GREEN}0${NC}) selesai"
+        echo ""
+        read -p "  Pilih [1-6, 0=selesai]: " choice
+
+        case "$choice" in
+            0) break ;;
+            1) local cat="recon" ; local label="RECON" ;;
+            2) local cat="vulns" ; local label="VULN" ;;
+            3) local cat="creds" ; local label="CREDS" ;;
+            4) local cat="payloads" ; local label="PAYLOAD" ;;
+            5) local cat="loot" ; local label="LOOT" ;;
+            6) local cat="exploits" ; local label="EXPLOIT" ;;
+            *) echo -e "${RED}Pilihan gak valid!${NC}" ; continue ;;
+        esac
+
+        echo ""
+        echo -e "${CYAN}--- $label: Simpan Hasil ---${NC}"
+        echo ""
+
+        # Nanya lokasi file
+        local subdir="$dir/$cat"
+        local default_file="$subdir/${label}_$(date +%Y%m%d_%H%M).txt"
+
+        echo -e "${YELLOW}Lokasi penyimpanan:${NC}"
+        echo -e "  ${GREEN}Enter${NC} = ${WHITE}$default_file${NC}"
+        echo -e "  Atau input path kustom (relative ke folder ${cat}/)"
+        read -p "  File: " custom_file
+
+        local save_path
+        if [[ -z "$custom_file" ]]; then
+            save_path="$default_file"
+        else
+            if [[ "$custom_file" == /* ]]; then
+                save_path="$custom_file"
+            else
+                save_path="$subdir/$custom_file"
+            fi
+        fi
+
+        # Check content source
+        echo ""
+        echo -e "${YELLOW}Mau input dari mana?${NC}"
+        echo -e "  ${GREEN}1${NC}) Ketik langsung (manual)"
+        echo -e "  ${GREEN}2${NC}) Copy dari clipboard/file lain"
+        echo -e "  ${GREEN}3${NC}) Hasil command (pipe dari tool)"
+        read -p "  Pilih [1-3]: " source_type
+
+        echo "" >> "$save_path"
+        echo "============================================" >> "$save_path"
+        echo "  FOX STASH — $label" >> "$save_path"
+        echo "  Target  : $target" >> "$save_path"
+        echo "  Date    : $(date '+%Y-%m-%d %H:%M')" >> "$save_path"
+        echo "============================================" >> "$save_path"
+        echo "" >> "$save_path"
+
+        case "$source_type" in
+            1)
+                echo -e "${YELLOW}Tulis konten (ketik 'EOF' di baris baru untuk selesai):${NC}"
+                while IFS= read -r line; do
+                    [[ "$line" == "EOF" ]] && break
+                    echo "$line" >> "$save_path"
+                done
+                ;;
+            2)
+                echo -e "${YELLOW}Paste konten di sini (ketik 'EOF' di baris baru untuk selesai):${NC}"
+                while IFS= read -r line; do
+                    [[ "$line" == "EOF" ]] && break
+                    echo "$line" >> "$save_path"
+                done
+                ;;
+            3)
+                echo -e "${YELLOW}Masukkan output command (ketik 'EOF' di baris baru untuk selesai):${NC}"
+                while IFS= read -r line; do
+                    [[ "$line" == "EOF" ]] && break
+                    echo "$line" >> "$save_path"
+                done
+                ;;
+        esac
+
+        echo "" >> "$save_path"
+        echo -e "${GREEN}[+] ${label} saved to: $save_path${NC}"
+
+        # Auto-add note
+        local notes_file="$dir/notes.log"
+        echo "[$(date '+%Y-%m-%d %H:%M')] STASH ${label} → ${save_path}" >> "$notes_file"
+
+        # Prompt untuk deskripsi singkat
+        echo ""
+        read -p "  ${YELLOW}Deskripsi singkat (enter = skip):${NC} " desc
+        if [[ -n "$desc" ]]; then
+            echo "[$(date '+%Y-%m-%d %H:%M')]   ${desc}" >> "$notes_file"
+        fi
+
+        echo ""
+        echo -e "${GREEN}✅ Done! ${label} saved.${NC}"
+        echo ""
+    done
+
+    echo ""
+    echo -e "${CYAN}═══════════════════════════════════════════════${NC}"
+    echo -e "  ${GREEN}Semua hasil udah distash!${NC}"
+    echo -e "  ${YELLOW}  Cek: fox notes $target${NC}"
+    echo -e "  ${YELLOW}  Cek: fox status $target${NC}"
+    echo -e "${CYAN}═══════════════════════════════════════════════${NC}"
+    echo ""
+}
+
+
+# ============================================================
 # COMMAND: show flow/skills/manifest
 # ============================================================
 cmd_show() {
@@ -367,6 +583,7 @@ main() {
         status)     cmd_status "$@" ;;
         note)       cmd_note "$@" ;;
         notes)      cmd_notes "$@" ;;
+        stash)      cmd_stash "$@" ;;
         recon-add)  cmd_recon_add "$@" ;;
         flow|skills|manifest)
                     cmd_show "$cmd" ;;
