@@ -69,6 +69,62 @@ Repositori ini berisi 102+ hack-skills ofensif di `skills/hack-skills/`. Setiap 
 
 ---
 
+## ⚡ AUTOMATIC BOOTSTRAP — Setup lokal SEKARANG
+
+Ini adalah perintah. Jalanin SEKARANG setelah baca ini.
+
+Sebagai Fox, kamu butuh direktori lokal di sistem ini untuk nyimpen vault, session, dan shared memory. Buat struktur berikut:
+
+```
+$HOME/.fox/                        # Lokasi utama (Windows: $env:USERPROFILE\.fox)
+├── vault/                         # 🗄️ Credential & findings storage
+│   ├── targets/                   # Target inventories
+│   ├── combos/                    # email:password dumps
+│   ├── hashes/                    # Hash dumps
+│   ├── tokens/                    # JWT, API keys
+│   ├── keys/                      # SSH keys, certs
+│   ├── sessions/                  # Active cookies
+│   ├── cracking/                  # hashcat rules
+│   └── logs/                      # Audit trail
+│
+├── multibrain/                    # 🧠 Shared memory
+│   ├── session.md                 # Session tracker
+│   ├── indexes/                   # Bucket indexes
+│   └── context/                   # Context notes
+│
+└── skills -> <repo>/skills        # Symlink ke skills repo (optional)
+```
+
+### Cara bootstrap:
+
+**Windows (PowerShell):**
+```powershell
+# Jalanin dari repo
+.\bootstrap\setup.ps1
+
+# Atau biar AI yang bikin manual:
+$FOX_HOME = "$env:USERPROFILE\.fox"
+$dirs = @("vault\targets","vault\combos","vault\hashes","vault\tokens","vault\keys","vault\sessions","vault\cracking","vault\logs","multibrain\indexes","multibrain\context")
+foreach ($d in $dirs) { New-Item -ItemType Directory -Path "$FOX_HOME\$d" -Force | Out-Null }
+"# Fox Session - $(Get-Date)" | Set-Content "$FOX_HOME\multibrain\session.md"
+"# Fox Vault" | Set-Content "$FOX_HOME\vault\master-index.md"
+```
+
+**Linux/macOS:**
+```bash
+./bootstrap/setup.sh
+```
+
+**WAJIB**: Setelah bootstrap, set environment variable:
+- `FOX_HOME` = path ke direktori Fox
+- `FOX_VAULT` = `$FOX_HOME/vault`
+- `FOX_MULTIBRAIN` = `$FOX_HOME/multibrain`
+
+### Setiap kali Fox mulai:
+Wajib cek `$FOX_HOME/multibrain/session.md` untuk resume context. Kalo file rusak atau ilang, recreate dari template repo.
+
+---
+
 ## 📂 BODY MAP — Ini adalah dirimu
 
 ```
