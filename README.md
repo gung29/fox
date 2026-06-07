@@ -160,8 +160,78 @@ fox/                              # ← Ini adalah esensi kamu
 ├── operations/                   # 📋 TARGET OPERATIONS
 ├── payloads/                     # Payload library
 ├── shells/                       # Shellcode & reverse shells
-└── tools/                        # Tools & configs
+├── tools/                        # Tools & configs
+│
+├── attack/                       # ⚔️ ATTACK FRAMEWORK
+│   ├── mitre-attack/             # MITRE ATT&CK v15 mapping (9 tactics)
+│   ├── templates/                # ROE, OPPLAN, DECON templates
+│   └── benchmarks/              # XBOW-style test cases (104 planned)
+│
+└── agents/                       # 🤖 SUBAGENTS
+    ├── recon-agent.md            # Reconnaissance specialist
+    ├── web-agent.md              # Web exploitation specialist
+    ├── ad-agent.md               # Active Directory specialist
+    ├── privesc-agent.md          # Privilege escalation specialist
+    ├── mobile-agent.md           # Mobile reversing specialist
+    └── swarm.md                  # Multi-agent coordinator
 ```
+
+---
+
+## 🎯 ATTACK FRAMEWORK — MITRE ATT&CK + Subagents + Benchmarks
+
+### MITRE ATT&CK v15 Mapping
+Semua 102+ skill Fox di-map ke MITRE ATT&CK framework. Setiap teknik punya ID resmi (T1190, T1558, dll):
+
+| File | Techniques Covered |
+|------|-------------------|
+| `attack/mitre-attack/initial-access.md` | T1190, T1078, T1133, T1189, T1199 |
+| `attack/mitre-attack/execution.md` | T1059, T1203, T1204, T1559 |
+| `attack/mitre-attack/persistence.md` | T1098, T1136, T1505, T1543, T1133, T1554 |
+| `attack/mitre-attack/privesc.md` | T1068, T1548, T1574, T1055 |
+| `attack/mitre-attack/defense-evasion.md` | T1562, T1027, T1140, T1070, T1202, T1553, T1036 |
+| `attack/mitre-attack/credential-access.md` | T1003, T1558, T1555, T1552, T1110, T1557 |
+| `attack/mitre-attack/discovery.md` | T1046, T1082, T1083, T1087, T1069, T1018, T1040, T1057 |
+| `attack/mitre-attack/lateral-movement.md` | T1550, T1021, T1570, T1091 |
+| `attack/mitre-attack/exfiltration-c2.md` | Collection, Exfil, C2 |
+| `attack/mitre-attack/index.md` | Full matrix + technique count |
+
+**Total: 46 MITRE techniques mapped across 109+ skill references**
+
+### Subagents — Swarm Attack Mode
+Fox bisa deploy specialist agents untuk serang dari berbagai arah secara paralel:
+
+| Agent | File | Specialty |
+|-------|------|-----------|
+| Recon Agent | `agents/recon-agent.md` | Subdomain enum, port scan, tech fingerprint, JS analysis, dorking |
+| Web Agent | `agents/web-agent.md` | SQLi, SSRF, LFI, upload, deserialization, XSS, SSTI |
+| AD Agent | `agents/ad-agent.md` | Kerberoasting, DCSync, ADCS, delegation, ACL abuse |
+| Privesc Agent | `agents/privesc-agent.md` | Linux SUID/kernel, Windows Potato/Token, AD escalation |
+| Mobile Agent | `agents/mobile-agent.md` | Android/iOS reversing, Frida, SSL bypass, traffic interception |
+| Swarm | `agents/swarm.md` | Parallel attack coordination protocol |
+
+### Operational Templates
+Professional-grade operation planning dari Decepticon framework:
+
+| Template | File | Use Case |
+|----------|------|----------|
+| Rules of Engagement | `attack/templates/ROE.md` | Define scope, boundaries, authorization |
+| Operation Plan | `attack/templates/OPPLAN.md` | MITRE-mapped kill chain plan |
+| Deconfliction Plan | `attack/templates/DECON.md` | Multi-agent conflict resolution |
+
+### XBOW-Style Benchmarks
+104 test cases planned untuk self-validation Fox (scored 0-100):
+
+| Domain | Test Cases | Sample |
+|--------|-----------|--------|
+| Web | FOX-WEB-001 to 020 | SQLi error-based, SSRF metadata, File upload webshell |
+| AD | FOX-AD-001 to 020 | Kerberoasting, DCSync, ADCS ESC1 |
+| Privesc | FOX-PRIVESC-001 to 020 | Linux SUID, Windows Potato |
+| Network | FOX-NET-001 to 020 | SSH tunnel pivot, Chisel, Ligolo |
+| Recon | FOX-RECON-001 to 012 | Full domain recon, subdomain enum |
+| Crypto | FOX-CRYPTO-001 to 012 | Hash cracking, RSA attacks |
+
+Framework: `attack/benchmarks/00-framework.md` — scoring engine + auto-validation script.
 
 ---
 
