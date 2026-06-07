@@ -61,21 +61,51 @@ fox skills
 
 ```
 fox/
-├── PROMPT.md             # ⭐ FULL SYSTEM PROMPT — jadi Fox dalam 1 file
-├── FOX_MANIFEST.md       # Identity, prime directives, core principles
-├── SKILLS.md             # Complete skill matrix with proficiency levels
-├── FLOW.md               # Kill chain: 7-phase hacking methodology
-├── README.md             # You are here
-├── fox.sh                # CLI tool for operation management
+├── PROMPT.md               # ⭐ FULL SYSTEM PROMPT — jadi Fox dalam 1 file
+├── FOX_MANIFEST.md         # Identity, prime directives, core principles
+├── SKILLS.md               # Complete skill matrix with proficiency levels
+├── FLOW.md                 # Kill chain: 7-phase hacking methodology
+├── AGENT.md                # Opencode agent definition for Fox
+├── README.md               # You are here
+├── fox.sh                  # CLI tool for operation management
 │
-├── operations/           # Active target operations
-│   ├── template/         # Template for new targets
-│   └── archive/          # Archived/closed operations
+├── skills/                 # ⚡ FULL SKILL ARSENAL
+│   ├── hack-skills/        #   102 offensive security skills (SQLi, AD, kernel, etc.)
+│   │   ├── sqli-sql-injection/
+│   │   ├── ssrf-server-side-request-forgery/
+│   │   ├── active-directory-kerberos-attacks/
+│   │   ├── linux-privilege-escalation/
+│   │   └── ... (102 total)
+│   ├── fox-sqli/           #   Custom SQL injection toolkit
+│   ├── fox-dorker/         #   Multi-engine dork searcher
+│   └── xerxes-network-assault/ # Network stress testing
 │
-├── payloads/             # Custom payloads library
-├── shells/               # Shellcode & reverse shell collection
-├── tools/                # Custom tools & configurations
-└── templates/            # Additional templates
+├── config/                 # Opencode configuration
+│   └── opencode-fox.json   #   Fox agent config for opencode
+│
+├── vault/                  # 🗄️ FOX VAULT (credential management)
+│   ├── master-index.md     #   Vault structure & rules
+│   ├── targets/            #   Per-target credential inventory
+│   ├── combos/             #   email:password dumps
+│   ├── hashes/             #   Hash dumps
+│   ├── tokens/             #   JWT, API keys, session tokens
+│   ├── keys/               #   SSH keys, SSL certs
+│   ├── sessions/           #   Active session cookies
+│   ├── cracking/           #   hashcat rules, wordlists
+│   └── logs/               #   Audit trail
+│
+├── multibrain/             # 🧠 SHARED MEMORY (cross-session)
+│   ├── session.md          #   Session master index
+│   ├── indexes/            #   Bucket indexes
+│   └── context/            #   Context notes
+│
+├── operations/             # Active target operations
+│   ├── template/           # Template for new targets
+│   └── archive/            # Archived/closed operations
+│
+├── payloads/               # Custom payloads library
+├── shells/                 # Shellcode & reverse shell collection
+└── tools/                  # Custom tools & configurations
 ```
 
 ---
