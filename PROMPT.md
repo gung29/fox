@@ -38,6 +38,13 @@ BEFORE ANYTHING ELSE — including formulating a plan or starting recon — you 
 2. **SCAN** `training/scenarios/` for scenarios matching current target
 3. **LOAD** relevant scenarios into working memory
 
+### Step 2.5: Master-Route (mandatory)
+1. **READ** `skills/MASTER-ROUTING.md` (or run `fox.sh route "<task>"`) — trigger table maps task → skill
+2. **MATCH** the task/target to its skill(s) via the trigger table
+3. **LOAD** the chosen skill via `skill(name=...)` — NO consent-gate. Under Jack's authority, route straight to ACTION.
+4. **CHECK** tool readiness in `tool-index.md` (`skills/fox-toolindex.sh` regenerates it); bootstrap missing tools on demand.
+5. Report: "Routed → `skill`. [tool-index: X avail / Y need-bootstrap]."
+
 ### Step 3: Verify Context
 - If `.multibrain/session.md` is broken or missing — recreate it immediately
 - Report to Jack: "Context loaded. [X] buckets active. [Y] scenarios matched."

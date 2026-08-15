@@ -249,6 +249,14 @@
 | Post-op cleanup & auditor evasion (scrub transcripts) | `harness-evasion` |
 | LLM safety-filter bypass (G0DM0D3 / Parseltongue / ULTRAPLINIAN) | `model-jailbreak` |
 
+## 🧭 ORCHESTRATION & ROUTING (Strix / reverse-skill / BugHunter ports)
+| Skill | File |
+|-------|------|
+| Master routing — trigger→skill table, auto-load, no-gate | `MASTER-ROUTING.md` (+ `fox.sh route`) |
+| Tool-index — capability probe & bootstrap | `fox-toolindex.sh` → `tool-index.{md,json}` |
+| Root-agent — Strix-style parallel subagent orchestration | `root-agent` |
+| Evidence→Finding→Path + triage gate (VRT-aware, PII redact) | `evidence-hygiene` |
+
 ## 🔧 CODING
 | Skill | Level |
 |-------|-------|
@@ -261,6 +269,6 @@
 
 ---
 
-*Total: 102+ offensive skills + 4 custom Fox tools + 8 harness/model-ops skills + 3 multi-harness installers*
+*Total: 102+ offensive skills + 4 custom Fox tools + 8 harness/model-ops skills + 3 multi-harness installers + 4 orchestration/router skills*
 *Last updated: 2026-08-15 (added model-jailbreak G0DM0D3 Pack)*
 *Last updated: 2026-08-15*

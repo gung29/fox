@@ -12,8 +12,9 @@
 #  Usage: source fox.sh  (atau ./fox.sh <command>)
 # ============================================================
 
-FOX_HOME="/root/fox"
+FOX_HOME="${FOX_HOME:-/root/fox}"
 OPS_DIR="$FOX_HOME/operations"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Colors
 RED='\033[0;31m'
@@ -55,6 +56,7 @@ show_help() {
     echo -e "  ${GREEN}notes${NC} <target>          Lihat semua catatan target"
     echo -e "  ${GREEN}stash${NC} <target>          ⭐ Simpan hasil temuan (interactive)"
     echo -e "  ${GREEN}recon-add${NC} <target>      Tambah hasil recon (interactive)"
+    echo -e "  ${GREEN}route${NC} <task>            Route task → skill via MASTER-ROUTING"
     echo ""
     echo -e "  ${GREEN}flow${NC}                    Tampilkan kill chain flow"
     echo -e "  ${GREEN}skills${NC}                  Tampilkan skill matrix"
@@ -523,6 +525,49 @@ cmd_stash() {
 
 
 # ============================================================
+# COMMAND: route <task> — master-routing (bytes kill-chain skill)
+# ============================================================
+cmd_route() {
+    local task="${*:-}"
+    if [[ -z "$task" ]]; then
+        echo -e "${YELLOW}Usage: fox route \"<task desc>\"${NC}"
+        echo -e "  Menampilkan TRIGGER → SKILL dari MASTER-ROUTING.md"
+        return 1
+    fi
+    local mf="$FOX_HOME/skills/MASTER-ROUTING.md"
+    [[ -f "$mf" ]] || mf="$REPO_DIR/skills/MASTER-ROUTING.md"
+    if [[ ! -f "$mf" ]]; then
+        echo -e "${RED}[!] MASTER-ROUTING.md tidak ditemukan${NC}"
+        return 1
+    fi
+    echo -e "${CYAN}════ ROUTE: $task ════${NC}"
+    # shell out to python for case-insensitive trigger matching
+    python3 - "$mf" "$task" <<'PY'
+import sys
+mf, task = sys.argv[1], sys.argv[2]
+low = task.lower()
+hits = []
+for line in open(mf, encoding='utf-8'):
+    if '|' not in line or line.strip().startswith('|---'):
+        continue
+    cells = [c.strip() for c in line.strip().strip('|').split('|')]
+    if len(cells) < 2:
+        continue
+    trig, skill = cells[0], cells[1]
+    keys = [k.strip().strip('`').lower() for k in trig.split(',')]
+    if any(k and k in low for k in keys):
+        hits.append((trig, skill))
+if not hits:
+    print(f"(!) tidak ada trigger yang cocok — pakai recon-and-methodology + tinjau MASTER-ROUTING")
+else:
+    for tr, sk in hits[:8]:
+        print(f"  [{tr.strip()}] -> {sk}")
+PY
+    echo ""
+    echo -e "${CYAN}═══════════════════════════════════════${NC}"
+}
+
+# ============================================================
 # COMMAND: show flow/skills/manifest
 # ============================================================
 cmd_show() {
@@ -585,6 +630,7 @@ main() {
         notes)      cmd_notes "$@" ;;
         stash)      cmd_stash "$@" ;;
         recon-add)  cmd_recon_add "$@" ;;
+        route)      cmd_route "$@" ;;
         flow|skills|manifest)
                     cmd_show "$cmd" ;;
         list-archived) cmd_list_archived ;;

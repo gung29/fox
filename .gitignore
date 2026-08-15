@@ -46,3 +46,8 @@ training/validation/results/*
 # Python cache
 __pycache__/
 *.pyc
+
+# Tool-index (generated per-machine)
+tool-index.md
+tool-index.json
+
