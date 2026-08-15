@@ -6,7 +6,7 @@ vault/
 ├── targets/          # Per-target credential inventory
 ├── combos/           # email:password dumps
 ├── hashes/           # Hash dumps (NTLM, SHA, bcrypt, etc.)
-├── tokens/           # JWT, API keys, session tokens
+├── intel/            # CVE/exploit intel cache (cve-intel-weaponizer)
 ├── keys/             # SSH keys, SSL certs, PGP keys
 ├── sessions/         # Active session cookies
 ├── cracking/         # hashcat rules, cracked hashes

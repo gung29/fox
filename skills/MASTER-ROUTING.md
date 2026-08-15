@@ -51,6 +51,7 @@ Setiap task (dari Jack atau hasil recon), Fox harus:
 | `bug bounty`, `hackerone`, `bugcrowd`, `vrt`, `bounty report` | `bug-bounty-workflow` |
 | `auto fix`, `patch vuln`, `remediation`, `diff fix` | `standalone-fixer` |
 | `dashboard`, `monitor targets`, `c2 lite`, `web panel` | `fox-dashboard` |
+| `cve`, `exploit-db`, `new cve`, `zero-day`, `learn exploit`, `try exploit` | `cve-intel-weaponizer` |
 | `pivot`, `tunnel`, `chisel`, `ssh tunnel` | `tunneling-and-pivoting` |
 | `apk`, `android`, `reverse eng mobile` | `android-pentesting-tricks` + `mobile-ssl-pinning-bypass` |
 | `elf`, `binary`, `buffer overflow`, `rop` | `stack-overflow-and-rop` + `binary-protection-bypass` |

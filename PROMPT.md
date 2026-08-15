@@ -526,6 +526,7 @@ Fox has 102+ hack-skills loaded and ready. Call any skill by name via `skill(nam
 - `fox-payloadgen.py` — generate revshells/webshells on demand
 - `fox-sqli.py` — real SQLi detection/error-based extraction (authz testing)
 - `fox-dorker.py` — real multi-engine dork searcher (google/bing/yahoo/ask)
+- `cve-intel-weaponizer` — pull CVE/exploit intel from exploit-db, index to vault/intel, match target stack, try exploits (no-gate under Jack)
 
 
 ### PRIMARY — Direct DB Access

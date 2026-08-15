@@ -278,6 +278,11 @@
 | Standalone fixer — auto-generate patches/diffs for findings | `standalone-fixer` |
 | Jack-Dashboard — live C2-lite target monitor & notify hook | `fox-dashboard` |
 
+## 🧠 CVE INTELLIGENCE & WEAPONIZATION
+| Skill | File |
+|-------|------|
+| CVE intel puller + auto-weaponizer (exploit-db → vault/intel → match target) | `cve-intel-weaponizer` |
+
 ## 🧭 ORCHESTRATION & ROUTING (Strix / reverse-skill / BugHunter ports)
 | Skill | File |
 |-------|------|
