@@ -355,7 +355,26 @@ chmod +x fox.sh && source fox.sh
 fox new target.com
 ```
 
-### Untuk OpenCode — Agent Setup:
+### Multi-Harness Install — opencode / oh-my-pi / hermes
+
+```bash
+# Persona + skills otomatis ke SEMUA harness yang terdeteksi
+./config/install-fox.sh              # preview (lihat apa yg diubah)
+./config/install-fox.sh apply        # apply ke semua harness
+./config/install-fox.sh apply opencode|omp|hermes   # apply ke satu saja
+```
+
+Yang di-apply:
+| Harness | Yang ditulis |
+|---|---|
+| **opencode** | `agent.fox` persona + skill paths + `permission.* = allow` |
+| **oh-my-pi** | `~/.omp/agent/models.yml` (router default/smol/slow/plan/commit) + persona di `settings.json` |
+| **hermes** | `~/.hermes/config.yaml` (personality `fox`, system_prompt, prefill) + `SOUL.md` Fox |
+
+Setiap target backup config lama dulu (`.bak-fox-*`) — nggak pernah menimpa tanpa cadangan.
+Alternatif manual: `./config/install-omp.sh apply`, `python3 config/install-hermes.py`.
+
+### Untuk OpenCode — Agent Setup (manual):
 
 ```json
 // opencode.json

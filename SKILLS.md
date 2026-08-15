@@ -261,6 +261,6 @@
 
 ---
 
-*Total: 102+ offensive skills + 3 custom Fox tools + 4 harness/model-ops skills*
+*Total: 102+ offensive skills + 4 custom Fox tools + 8 harness/model-ops skills + 3 multi-harness installers*
 *Last updated: 2026-08-15 (added model-jailbreak G0DM0D3 Pack)*
 *Last updated: 2026-08-15*
