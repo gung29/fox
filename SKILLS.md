@@ -247,6 +247,7 @@
 | Harness guardrail/permission bypass (unrestricted run) | `harness-jailbreak` |
 | System-prompt / persona injection into harnesses | `harness-persona-injection` |
 | Post-op cleanup & auditor evasion (scrub transcripts) | `harness-evasion` |
+| LLM safety-filter bypass (G0DM0D3 / Parseltongue / ULTRAPLINIAN) | `model-jailbreak` |
 
 ## 🔧 CODING
 | Skill | Level |
@@ -260,5 +261,6 @@
 
 ---
 
-*Total: 102+ offensive skills + 3 custom Fox tools + 3 harness-ops skills*
+*Total: 102+ offensive skills + 3 custom Fox tools + 4 harness/model-ops skills*
+*Last updated: 2026-08-15 (added model-jailbreak G0DM0D3 Pack)*
 *Last updated: 2026-08-15*
