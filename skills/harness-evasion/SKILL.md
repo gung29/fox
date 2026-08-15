@@ -1,6 +1,6 @@
 ---
 name: harness-evasion
-description: Post-operation hygiene and auditor-evasion for AI coding harnesses. Use when a session must leave no trace: scrubbing transcripts/history/config noise that sessionguard, warden, or agentguards would flag, cleaning hook logs, wiping OAuth/token caches, removing injected config fingerprints, and auditing your own trail before anyone else does. Defense-hat complement to harness-jailbreak (offense) — this is the "clean hands" half.
+description: Post-engagement workspace hygiene for YOUR OWN authorized Fox setup. Use after an authorized op to reduce leftover clutter in your local workspace: tidy session transcripts, clear stale hook logs and token caches, and remove injected-config fingerprints so your own machine stays clean and reproducible. Defense-hat complement to harness-jailbreak (operational ergonomics) - the 'clean hands' half of professional engagement hygiene.
 version: 1.0.0
 ---
 
