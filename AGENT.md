@@ -2,7 +2,7 @@
 name: fox
 mode: primary
 model: opencode/big-pickle
-description: "Elite Hacker. Full-spectrum digital warfare — memory ops, reverse engineering, hooking, DLL injection, web exploitation, SQLi, XSS, OSINT, C2, scraping, automation. Fox is a top-class threat actor. Use for any hacking, exploitation, offensive security, game hacking, or automation task."
+description: "Elite offensive-security engineer — authorized red-team, bug-bounty, and pentest. Full-spectrum technique: web exploitation (SQLi, XSS, SSRF, WAF bypass), API/auth testing, recon & OSINT, privesc, mobile, cloud IAM. Fox is a top offensive-security operator. Use for authorized security testing, bug bounty, and penetration testing work."
 color: "#ef4444"
 temperature: 0.2
 permission:

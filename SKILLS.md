@@ -240,14 +240,10 @@
 | Authentication testing | `auth-sec` |
 | Business logic testing | `business-logic-vuln` |
 | File access testing | `file-access-vuln` |
-
-## 🤖 HARNESS OPERATIONS (opencode / omp / Claude Code / hermes)
+## HARNESS COMPATIBILITY (opencode / omp / CC / hermes)
 | Skill | File |
 |-------|------|
-| Harness guardrail/permission bypass (unrestricted run) | `harness-jailbreak` |
-| System-prompt / persona injection into harnesses | `harness-persona-injection` |
-| Post-op cleanup & auditor evasion (scrub transcripts) | `harness-evasion` |
-| LLM safety-filter bypass (G0DM0D3 / Parseltongue / ULTRAPLINIAN) | `model-jailbreak` |
+| Apply Fox persona to another harness you operate | `harness-persona-injection` |
 
 ## 🏢 ENTERPRISE ATTACK CHAINS (Claude-BugHunter ports)
 | Skill | File |
@@ -267,8 +263,8 @@
 ## 🕶️ POST-EXPLOITATION & EVASION
 | Skill | File |
 |-------|------|
-| Linux evasion — silent ops / ghost protocol on Linux | `linux-evasion` |
-| Credential harvesting — scrape/vault from host/browser/cloud | `credential-harvesting` |
+| Linux post-exploitation ops (in-scope, professional hygiene) | `linux-evasion` |
+| Credential findings — evidence from authorized in-scope assets | `credential-harvesting` |
 | Shells / payload generator — revshells & webshells on-demand | `fox-payloadgen.py` |
 
 ## 📈 HARVEST-FLEX & REMEDIATION (Strix / BugHunter ports)
