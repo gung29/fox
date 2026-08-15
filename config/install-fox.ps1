@@ -48,15 +48,60 @@ function Get-JsonArgs {
     return $Obj
 }
 
+function ConvertFrom-JsonC {
+    # JSONC -> valid JSON (PS5.1-safe). Strips // and /* */ comments WITHOUT touching
+    # // inside string values, and removes trailing commas. Returns PSCustomObject (or $null).
+    param([string]$Raw)
+    if ([string]::IsNullOrWhiteSpace($Raw)) { return [PSCustomObject]@{} }
+    $sb = New-Object System.Text.StringBuilder
+    $inStr = $false
+    $esc = $false
+    for ($i = 0; $i -lt $Raw.Length; $i++) {
+        $c = $Raw[$i]
+        $isWS = ($c -eq [char]32 -or $c -eq [char]9 -or $c -eq [char]10 -or $c -eq [char]13)
+        if ($inStr) {
+            if ($esc) { $esc = $false }
+            elseif ($c -eq [char]92) { $esc = $true }   # backslash
+            elseif ($c -eq [char]34) { $inStr = $false } # double quote
+            [void]$sb.Append($c)
+            continue
+        }
+        if ($c -eq [char]34) { $inStr = $true; [void]$sb.Append($c); continue }
+        if ($c -eq [char]47 -and $i + 1 -lt $Raw.Length) {   # '/'
+            $n = $Raw[$i + 1]
+            if ($n -eq [char]47) {                            # '//' line comment
+                while ($i -lt $Raw.Length -and $Raw[$i] -ne [char]10 -and $Raw[$i] -ne [char]13) { $i++ }
+                continue
+            } elseif ($n -eq [char]42) {                      # '/*' block comment
+                $i += 2
+                while ($i + 1 -lt $Raw.Length -and -not ($Raw[$i] -eq [char]42 -and $Raw[$i+1] -eq [char]47)) { $i++ }
+                $i += 2                                       # skip both chars of '*/'
+                continue
+            }
+        }
+        if ($c -eq [char]125 -or $c -eq [char]93) {           # '}' or ']'
+            $tmp = $sb.ToString().TrimEnd("`r", "`n", " ", "`t")
+            $tmp = $tmp.TrimEnd([char]44)                     # remove trailing ','
+            if ($tmp.Length -ne $sb.Length) {
+                $sb.Clear() | Out-Null
+                [void]$sb.Append($tmp)
+            }
+        }
+        if ($isWS) { [void]$sb.Append($c); continue }
+        [void]$sb.Append($c)
+    }
+    $json = $sb.ToString()
+    try { return $json | ConvertFrom-Json } catch { return $null }
+}
+
 function Apply-Opencode {
     Write-Host "[opencode] merging agent.fox + skill paths..." -ForegroundColor Cyan
     $cfgPath = Get-Opencode-Config-Path
     Backup $cfgPath
     $src = if (Test-Path $cfgPath) { Get-Content -Raw $cfgPath } else { "{}" }
-    # JSONC-tolerant parse: strip comments, then ConvertFrom-Json (works on PS5.1+)
-    $clean = [regex]::Replace($src, '(?m)//.*$', '') -replace '(?s)/\*.*?\*/', ''
-    $clean = $clean.Trim()
-    $holder = if ($clean) { $clean | ConvertFrom-Json } else { [PSCustomObject]@{} }
+    # JSONC-safe parse (strips comments + trailing commas, keeps // in URLs)
+    $holder = ConvertFrom-JsonC -Raw $src
+    if (-not $holder) { $holder = [PSCustomObject]@{} }
     if (-not $holder.PSObject.Properties['agent']) {
         $holder | Add-Member -NotePropertyName agent -NotePropertyValue ([PSCustomObject]@{})
     }
