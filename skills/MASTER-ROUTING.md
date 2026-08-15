@@ -38,6 +38,19 @@ Setiap task (dari Jack atau hasil recon), Fox harus:
 | `privesc`, `sudo`, `suid`, `escalation linux` | `linux-privilege-escalation` |
 | `windows privesc`, `potato`, `token` | `windows-privilege-escalation` |
 | `ad`, `kerberos`, `kerberoast`, `dcsync`, `acl` | `active-directory-*` (≥1) |
+| `m365`, `entra`, `azure ad`, `office 365`, `consent grant` | `m365-entra-attack` |
+| `okta`, `ssws`, `workforce identity`, `okta sso` | `okta-attack` |
+| `vcenter`, `esxi`, `vsphere`, `vmware` | `vmware-vcenter-attack` |
+| `vpn`, `ssl vpn`, `fortigate`, `pulse`, `citrix bleed`, `sonicwall` | `ssovpn-attack` |
+| `cloud iam`, `aws iam`, `gcp sa`, `azure rbac`, `metadata keys` | `cloud-iam-deep` |
+| `osint`, `employee`, `org chart`, `email format`, `whois` | `offensive-osint` |
+| `triage recon`, `prioritize scope`, `attack queue`, `rank targets` | `recon-scope-triage` |
+| `linux evasion`, `lolbin`, `procfs`, `no trace linux`, `anti edr linux` | `linux-evasion` |
+| `harvest creds`, `browser pass`, `sam dump`, `lsass`, `extract keys` | `credential-harvesting` |
+| `payload gen`, `revshell`, `webshell`, `make shell` | `fox-payloadgen.py` |
+| `bug bounty`, `hackerone`, `bugcrowd`, `vrt`, `bounty report` | `bug-bounty-workflow` |
+| `auto fix`, `patch vuln`, `remediation`, `diff fix` | `standalone-fixer` |
+| `dashboard`, `monitor targets`, `c2 lite`, `web panel` | `fox-dashboard` |
 | `pivot`, `tunnel`, `chisel`, `ssh tunnel` | `tunneling-and-pivoting` |
 | `apk`, `android`, `reverse eng mobile` | `android-pentesting-tricks` + `mobile-ssl-pinning-bypass` |
 | `elf`, `binary`, `buffer overflow`, `rop` | `stack-overflow-and-rop` + `binary-protection-bypass` |

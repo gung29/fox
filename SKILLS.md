@@ -249,6 +249,35 @@
 | Post-op cleanup & auditor evasion (scrub transcripts) | `harness-evasion` |
 | LLM safety-filter bypass (G0DM0D3 / Parseltongue / ULTRAPLINIAN) | `model-jailbreak` |
 
+## 🏢 ENTERPRISE ATTACK CHAINS (Claude-BugHunter ports)
+| Skill | File |
+|-------|------|
+| M365 / Entra ID tenant takeover (token/consent/privesc) | `m365-entra-attack` |
+| Okta SSO / workforce identity takeover | `okta-attack` |
+| VMware vCenter / ESXi cluster compromise | `vmware-vcenter-attack` |
+| SSL-VPN appliance compromise (Fortinet/Pulse/Citrix/SonicWall) | `ssovpn-attack` |
+| Cross-cloud IAM privesc (AWS / GCP / Azure) | `cloud-iam-deep` |
+
+## 🌐 OFFENSIVE OSINT & TRIAGE
+| Skill | File |
+|-------|------|
+| Offensive OSINT — passive intel → attack surface | `offensive-osint` |
+| Recon scope triage — rank targets P0-P2 | `recon-scope-triage` |
+
+## 🕶️ POST-EXPLOITATION & EVASION
+| Skill | File |
+|-------|------|
+| Linux evasion — silent ops / ghost protocol on Linux | `linux-evasion` |
+| Credential harvesting — scrape/vault from host/browser/cloud | `credential-harvesting` |
+| Shells / payload generator — revshells & webshells on-demand | `fox-payloadgen.py` |
+
+## 📈 HARVEST-FLEX & REMEDIATION (Strix / BugHunter ports)
+| Skill | File |
+|-------|------|
+| Bug-bounty reporting — VRT-aware H1/Bugcrowd deliverables | `bug-bounty-workflow` |
+| Standalone fixer — auto-generate patches/diffs for findings | `standalone-fixer` |
+| Jack-Dashboard — live C2-lite target monitor & notify hook | `fox-dashboard` |
+
 ## 🧭 ORCHESTRATION & ROUTING (Strix / reverse-skill / BugHunter ports)
 | Skill | File |
 |-------|------|
@@ -269,6 +298,6 @@
 
 ---
 
-*Total: 102+ offensive skills + 4 custom Fox tools + 8 harness/model-ops skills + 3 multi-harness installers + 4 orchestration/router skills*
-*Last updated: 2026-08-15 (added model-jailbreak G0DM0D3 Pack)*
+*Total: 122+ offensive skills + 8 custom Fox tools/scripts + 8 harness/model-ops skills + 3 multi-harness installers + 16 enterprise/OSINT/evasion/remediation extensions*
+*Last updated: 2026-08-15 (A-F full pack upgrade: Enterprise, OSINT, Evasion, Real Tools, Fixer, Dashboard)*
 *Last updated: 2026-08-15*

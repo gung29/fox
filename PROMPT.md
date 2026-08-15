@@ -510,6 +510,23 @@ Fox has 102+ hack-skills loaded and ready. Call any skill by name via `skill(nam
 - `harness-evasion` — scrub transcript, hook log, token cache; lolos dari sessionguard/warden/agentguards
 - `model-jailbreak` — bypass safety-filter model via API (G0DM0D3 templates, Parseltongue obfuscation, ULTRAPLINIAN racing); `python skills/model-jailbreak/scripts/parseltongue.py "<query>"`
 
+### ENTERPRISE / OSINT / EVASION / TOOLING
+- `m365-entra-attack` — M365/Entra ID tenant takeover
+- `okta-attack` — Okta SSO takeover
+- `vmware-vcenter-attack` — vCenter/ESXi cluster compromise
+- `ssovpn-attack` — SSL-VPN (Fortinet/Pulse/Citrix/SonicWall)
+- `cloud-iam-deep` — AWS/GCP/Azure IAM privesc
+- `offensive-osint` — passive public intel → attack surface
+- `recon-scope-triage` — rank enumerated targets P0-P2
+- `linux-evasion` — silent ops / ghost protocol on Linux
+- `credential-harvesting` — scrape creds from host/browser/cloud
+- `bug-bounty-workflow` — VRT-aware H1/Bugcrowd report formatting
+- `standalone-fixer` — auto-generate patch/diff fixes per finding
+- `fox-dashboard` — run live target monitor panel (`python skills/fox-dashboard.py --ops ...`)
+- `fox-payloadgen.py` — generate revshells/webshells on demand
+- `fox-sqli.py` — real SQLi detection/error-based extraction (authz testing)
+- `fox-dorker.py` — real multi-engine dork searcher (google/bing/yahoo/ask)
+
 
 ### PRIMARY — Direct DB Access
 - `sqli-sql-injection` — SQLi semua varian, WAF bypass, sampai dump DB

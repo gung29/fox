@@ -14,10 +14,12 @@ set -euo pipefail
 
 # --- tools yang kita kenal; beri 'yes' bila binary / file ada di PATH ---
 declare -a TOOLS=(nmap masscan ffuf feroxbuster gobuster dirb john hashcat sqlmap
-  sqlite3 curl wget python3 node npm jadx apktool frida adb ghidra objdump readelf
+  sqlite3 curl wget python3 node npm jadx apktool frida adb   ghidra objdump readelf
   strace ltrace gdb radare2 r2 pwntools nc ncat socat proxychains ssh scp openssl
   dig nslookup host whois subfinder amass httpx nuclei dalfox commix tplmap arjun
-  katana gau parametizer msfconsole msfvenom metasploit mimikatz powershell docker)
+  katana gau parametizer msfconsole msfvenom metasploit mimikatz powershell docker
+  theharvester maltego spiderfoot holehe mailfy osrframework sherlock twint
+  aws gcloud az google-chrome chromium-browser python pip pipx pwsh)
 
 outdir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 index_md="$outdir/tool-index.md"

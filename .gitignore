@@ -51,3 +51,7 @@ __pycache__/
 tool-index.md
 tool-index.json
 
+
+# scan output (generated)
+fox-sqli-output/
+
