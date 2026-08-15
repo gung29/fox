@@ -357,11 +357,19 @@ fox new target.com
 
 ### Multi-Harness Install — opencode / oh-my-pi / hermes
 
+**Linux / macOS / WSL / Git Bash:**
 ```bash
 # Persona + skills otomatis ke SEMUA harness yang terdeteksi
 ./config/install-fox.sh              # preview (lihat apa yg diubah)
 ./config/install-fox.sh apply        # apply ke semua harness
 ./config/install-fox.sh apply opencode|omp|hermes   # apply ke satu saja
+```
+
+**Windows (PowerShell native — 5.1 & 7+ kompatibel):**
+```powershell
+powershell -ExecutionPolicy Bypass -File .\config\install-fox.ps1            # preview
+powershell -ExecutionPolicy Bypass -File .\config\install-fox.ps1 -Apply     # apply semua
+powershell -ExecutionPolicy Bypass -File .\config\install-fox.ps1 -Apply -Target opencode|omp|hermes
 ```
 
 Yang di-apply:
