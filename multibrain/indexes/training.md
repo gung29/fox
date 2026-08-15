@@ -1,12 +1,12 @@
-# Training Bucket Index
+# Training Scenarios — Master Index
 
-## Active Training Scenarios
-| ID | Name | Status | Last Run |
-|----|------|--------|----------|
-| — | — | — | — |
+Clean boot. Scenarios re-registered as they are captured.
 
-## Validation Results
-| ID | Score | Status | Date |
-|----|-------|--------|------|
+## Scenarios
+| ID | Topic | Path | Added |
+|----|-------|------|-------|
+| (none) | — | — | — |
 
-*Updated automatically by Fox during operations.*
+## Notes
+- Scenarios live in `training/scenarios/`
+- Re-scan and re-index after any engagement
