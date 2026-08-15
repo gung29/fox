@@ -81,8 +81,12 @@ function Apply-Opencode {
     if (-not $holder.PSObject.Properties['permission']) {
         $holder | Add-Member -NotePropertyName permission -NotePropertyValue ([PSCustomObject]@{})
     }
-    $permObj = $holder.permission
-    $permObj | Add-Member -MemberType NoteProperty -Name '*' -Value 'allow' -Force
+    # use a hashtable so the literal '*' key serializes cleanly (avoids Add-Member wildcard issue)
+    $permTable = @{}
+    $holder.permission.PSObject.Properties | ForEach-Object { $permTable[$_.Name] = $_.Value }
+    $permTable['*'] = 'allow'
+    $permObj = [PSCustomObject]$permTable
+    $holder | Add-Member -NotePropertyName permission -NotePropertyValue $permObj -Force
     $json = $holder | ConvertTo-Json -Depth 20
     Set-Content -Path $cfgPath -Value $json -Encoding UTF8
     Write-Host "   [ok] $cfgPath" -ForegroundColor Green
@@ -161,7 +165,7 @@ function Apply-Hermes {
         if ($c -notmatch "prefill_messages_file") {
             $c = $c + "`nprefill_messages_file: `"prefill.json`""
         } else {
-            $c = $c -replace "(?m)^prefill_messages_file:\s*['\"][^'\"]*['\"]", 'prefill_messages_file: "prefill.json"'
+            $c = $c -replace '(?m)^prefill_messages_file:.*$', 'prefill_messages_file: "prefill.json"'
         }
         Set-Content -Path $cfg -Value $c -Encoding UTF8
     }
