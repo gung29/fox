@@ -1,4 +1,4 @@
-# FOX — Windows multi-harness installer (PowerShell nativo)
+# FOX - Windows multi-harness installer (PowerShell native)
 # Applies Fox persona + skills to opencode / oh-my-pi / hermes on Windows.
 #
 # Uso:
@@ -42,7 +42,7 @@ function Get-Opencode-Config-Path {
 }
 
 function Get-JsonArgs {
-    # ConvertFrom-Json object → mutable PSCustomObject for cross-version editing.
+    # ConvertFrom-Json object -> mutable PSCustomObject for cross-version editing.
     # Avoids -AsHashtable (PS5.1 incompatible). Returns a deep-ish clone via PSObject.
     param($Obj)
     return $Obj
@@ -172,7 +172,7 @@ function Apply-Hermes {
 }
 
 if (-not $Apply) {
-    Write-Host "==> FOX · Windows multi-harness installer (PREVIEW)" -ForegroundColor Yellow
+    Write-Host "==> FOX - Windows multi-harness installer (PREVIEW)" -ForegroundColor Yellow
     Write-Host "  akan apply ke:"
     Write-Host "    - opencode  (agent.fox persona + skill paths + perm allow)"
     Write-Host "    - oh-my-pi  ($HOME\.omp\agent models.yml + persona)"
@@ -184,7 +184,7 @@ if (-not $Apply) {
     exit 0
 }
 
-Write-Host "==> FOX · Windows multi-harness installer (APPLY)" -ForegroundColor Yellow
+Write-Host "==> FOX - Windows multi-harness installer (APPLY)" -ForegroundColor Yellow
 if ($Target -in @("all","opencode")) { Apply-Opencode }
 if ($Target -in @("all","omp"))      { Apply-Omp }
 if ($Target -in @("all","hermes"))   { Apply-Hermes }

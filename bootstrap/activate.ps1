@@ -1,4 +1,4 @@
-# FOX ACTIVATION TRIGGER — Windows PowerShell
+# FOX ACTIVATION TRIGGER - Windows PowerShell
 # Panggil ini setiap kali Fox mulai.
 # Auto-load environment, check vault, resume sessions.
 
@@ -7,18 +7,18 @@ $VAULT_DIR = "$FOX_HOME\vault"
 $MULTIBRAIN_DIR = "$FOX_HOME\multibrain"
 $REPO_DIR = Split-Path -Parent $PSScriptRoot
 
-Write-Host "🦊 Fox online." -ForegroundColor Red
+Write-Host "FOX Fox online." -ForegroundColor Red
 
 # Check vault exists
 if (-not (Test-Path $VAULT_DIR)) {
-    Write-Host "  ⚠️  Vault not found. Run bootstrap/setup.ps1 first." -ForegroundColor Yellow
+    Write-Host "  [!]  Vault not found. Run bootstrap/setup.ps1 first." -ForegroundColor Yellow
 } else {
     Write-Host "  [+] Vault loaded: $VAULT_DIR" -ForegroundColor Green
 }
 
 # Check multibrain exists
 if (-not (Test-Path $MULTIBRAIN_DIR\session.md)) {
-    Write-Host "  ⚠️  No active session. Run bootstrap/setup.ps1 first." -ForegroundColor Yellow
+    Write-Host "  [!]  No active session. Run bootstrap/setup.ps1 first." -ForegroundColor Yellow
 } else {
     $SESSION = Get-Content "$MULTIBRAIN_DIR\session.md" -Head 10
     Write-Host "  [+] Session loaded" -ForegroundColor Green
