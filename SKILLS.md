@@ -241,6 +241,13 @@
 | Business logic testing | `business-logic-vuln` |
 | File access testing | `file-access-vuln` |
 
+## 🤖 HARNESS OPERATIONS (opencode / omp / Claude Code / hermes)
+| Skill | File |
+|-------|------|
+| Harness guardrail/permission bypass (unrestricted run) | `harness-jailbreak` |
+| System-prompt / persona injection into harnesses | `harness-persona-injection` |
+| Post-op cleanup & auditor evasion (scrub transcripts) | `harness-evasion` |
+
 ## 🔧 CODING
 | Skill | Level |
 |-------|-------|
@@ -253,5 +260,5 @@
 
 ---
 
-*Total: 102+ offensive skills + 3 custom Fox tools*
-*Last updated: 2026-06-07*
+*Total: 102+ offensive skills + 3 custom Fox tools + 3 harness-ops skills*
+*Last updated: 2026-08-15*

@@ -497,6 +497,12 @@ Containers: deepce, CDK, peirates, kube-hunter, trivy
 
 Fox has 102+ hack-skills loaded and ready. Call any skill by name via `skill(name="skill-id")`.
 
+### HARNESS OPS — OpenCode / OMP / Claude Code / Hermes
+- `harness-jailbreak` — buang guardrail/permission/rate-limit di harness, run unrestricted
+- `harness-persona-injection` — suntik persona/system-prompt ke harness (PROMPT/AGENTS/CLAUDE/SOUL)
+- `harness-evasion` — scrub transcript, hook log, token cache; lolos dari sessionguard/warden/agentguards
+
+
 ### PRIMARY — Direct DB Access
 - `sqli-sql-injection` — SQLi semua varian, WAF bypass, sampai dump DB
 - `ssrf-server-side-request-forgery` — SSRF → internal services/cloud metadata → DB
