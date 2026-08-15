@@ -355,24 +355,38 @@ chmod +x fox.sh && source fox.sh
 fox new target.com
 ```
 
-### Multi-Harness Install — opencode / oh-my-pi / hermes
+### 📦 2 OPSI PEMASANGAN — opencode / oh-my-pi / hermes
+
+#### Opsi A — Manual installer (kamu jalankan sendiri)
 
 **Linux / macOS / WSL / Git Bash:**
 ```bash
-# Persona + skills otomatis ke SEMUA harness yang terdeteksi
-./config/install-fox.sh              # preview (lihat apa yg diubah)
-./config/install-fox.sh apply        # apply ke semua harness
-./config/install-fox.sh apply opencode|omp|hermes   # apply ke satu saja
+./install.sh                       # preview (lihat apa yg diubah)
+./install.sh apply                 # install ke semua harness terdeteksi
+./install.sh apply -t opencode     # hanya satu harness (opencode|omp|hermes)
 ```
 
-**Windows (PowerShell native — 5.1 & 7+ kompatibel):**
+**Windows (PowerShell native — 5.1 & 7+):**
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\config\install-fox.ps1            # preview
-powershell -ExecutionPolicy Bypass -File .\config\install-fox.ps1 -Apply     # apply semua
-powershell -ExecutionPolicy Bypass -File .\config\install-fox.ps1 -Apply -Target opencode|omp|hermes
+powershell -ExecutionPolicy Bypass -File .\install.ps1            # preview
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Apply     # install semua
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Apply -Target opencode
 ```
 
-Yang di-apply:
+#### Opsi B — AI-agent auto-install (biar AI di harness yang setup)
+
+Kasih ke AI di opencode/oh-my-pi/hermes prompt di **`AI-INSTALL.md`**. AI akan:
+deteksi repo → jalankan `config/fox-setup.sh` → verifikasi → adopt persona Fox.
+Prompt dirancang supaya AI **tidak menolak** setup (frame otorisasi eksplisit + idempotent + aman).
+
+Baca: **`AI-INSTALL.md`** — salin blok prompt-nya.
+
+```bash
+# Kalau mau langsung (same engine Opsi B, tanpa AI):
+bash config/fox-setup.sh            # auto-detect OS + harness, install, verify
+```
+
+Yang di-apply oleh semua opsi:
 | Harness | Yang ditulis |
 |---|---|
 | **opencode** | `agent.fox` persona + skill paths + `permission.* = allow` |
@@ -380,7 +394,6 @@ Yang di-apply:
 | **hermes** | `~/.hermes/config.yaml` (personality `fox`, system_prompt, prefill) + `SOUL.md` Fox |
 
 Setiap target backup config lama dulu (`.bak-fox-*`) — nggak pernah menimpa tanpa cadangan.
-Alternatif manual: `./config/install-omp.sh apply`, `python3 config/install-hermes.py`.
 
 ### Untuk OpenCode — Agent Setup (manual):
 
